@@ -1,0 +1,51 @@
+﻿@page
+@model Presentation.Pages.Department.CreateModel
+@{
+    ViewData["Title"] = "Create Department";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Department</title>
+    </head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Create New Department</h2>
+        <form method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="Name" class="form-label">Department Name:</label>
+                <input type="text" class="form-control" id="Name" name="DepartmentCreate.Name" required>
+                <div class="invalid-feedback">Please enter a valid department name.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a asp-page="/Index" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation');
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@page
+@model Presentation.Pages.Department.IndexModel
+@{
+    ViewData["Title"] = "Departments List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments</title>
+   </head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Departments</h2>
+
+        <!-- Button for Creating a New Department -->
+        <a asp-page="/Department/Create" class="btn btn-primary mb-3">Create Department</a>
+
+        <!-- Table to Display Departments -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Departments != null && Model.Departments.Any())
+                {
+                    @foreach (var department in Model.Departments)
+                    {
+                        <tr>
+                            <th scope="row">@department.Id</th>
+                            <td>@department.Name</td>
+                            <td>
+                                <!-- Edit Button -->
+                                <a asp-page="/Department/Edit" asp-route-id="@department.Id" class="btn btn-sm btn-warning me-2">Edit</a>
+                                <!-- Delete Button -->
+                                <a asp-page="/Department/Delete" asp-route-id="@department.Id" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center">No departments available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    </body>
+</html>
