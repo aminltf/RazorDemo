@@ -19,27 +19,21 @@ public class DeleteModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(Guid? id)
     {
-        if (id == null)
-        {
+        if (id is null)
             return NotFound();
-        }
 
         Department = await _departmentRepository.GetByIdAsync(id.Value);
 
-        if (Department == null)
-        {
+        if (Department is null)
             return NotFound();
-        }
 
         return Page();
     }
 
     public async Task<IActionResult> OnPostAsync(Guid? id)
     {
-        if (id == null)
-        {
+        if (id is null)
             return NotFound();
-        }
 
         await _departmentRepository.DeleteAsync(id.Value);
         return RedirectToPage("/Department/Index");

@@ -1,31 +1,37 @@
 #nullable disable
 
-using Application.DTOs.Employee;
 using Application.Interfaces.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Presentation.Pages.Employee;
 
-public class CreateModel : PageModel
+public class EditModel : PageModel
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IDepartmentRepository _departmentRepository;
 
-    public CreateModel(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+    public EditModel(IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
     {
         _employeeRepository = employeeRepository;
         _departmentRepository = departmentRepository;
     }
 
     [BindProperty]
-    public EmployeeCreateDTO EmployeeCreate { get; set; }
-
+    public Domain.Entities.Employee Employee { get; set; }
     public IEnumerable<Domain.Entities.Department> Departments { get; set; }
 
-    public async Task<IActionResult> OnGet()
+    public async Task<IActionResult> OnGet(Guid? id)
     {
+        if (id is null)
+            return NotFound();
+
+        Employee = await _employeeRepository.GetByIdAsync(id.Value);
         Departments = await _departmentRepository.GetAllAsync();
+
+        if (Employee is null)
+            return NotFound();
+
         return Page();
     }
 
@@ -36,18 +42,7 @@ public class CreateModel : PageModel
             Departments = await _departmentRepository.GetAllAsync();
             return Page();
         }
-
-        var employee = new Domain.Entities.Employee
-        {
-            FirstName = EmployeeCreate.FirstName,
-            LastName = EmployeeCreate.LastName,
-            Email = EmployeeCreate.Email,
-            BirthDate = EmployeeCreate.BirthDate,
-            Gender = Domain.Enums.Gender.Male,
-            DepartmentId = EmployeeCreate.DepartmentId
-        };
-
-        await _employeeRepository.AddAsync(employee);
+        await _employeeRepository.UpdateAsync(Employee);
         return RedirectToPage("/Employee/Index");
     }
 }

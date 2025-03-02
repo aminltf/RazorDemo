@@ -1,4 +1,48 @@
 ﻿@page
 @model Presentation.Pages.Department.EditModel
 @{
+    ViewData["Title"] = "Edit Department";
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Department</title>
+    </head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Edit Department</h2>
+
+        <form method="post" class="needs-validation" novalidate>
+            <input type="hidden" asp-for="Department.Id" />
+
+            <div class="mb-3">
+                <label for="Name" class="form-label">Department Name:</label>
+                <input type="text" class="form-control" id="Name" asp-for="Department.Name" required>
+                <div class="invalid-feedback">Please enter a valid department name.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-page="/Departments/Index" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+
+   <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,4 +1,29 @@
 ﻿@page
 @model Presentation.Pages.Department.DeleteModel
 @{
+    ViewData["Title"] = "Delete Department";
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Department</title>
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Delete Department</h2>
+
+        <p>Are you sure you want to delete the department: <strong>@Model.Department.Name</strong>?</p>
+
+        <form method="post">
+            <input type="hidden" asp-for="Department.Id" />
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a asp-page="/Departments/Index" class="btn btn-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+
+    </body>
+</html>
